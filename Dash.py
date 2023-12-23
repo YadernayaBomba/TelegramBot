@@ -43,6 +43,24 @@ data_table = dash_table.DataTable(
     }
 )
 
+# Определяем внешний вид
+app.layout = html.Div([
+    html.H1('Информация по проектам', style={'textAlign': 'center'}),
+    html.Hr(),
+    html.H3('Количество участников', style={'textAlign': 'center'}),
+    dcc.Graph(id='time_series', figure=time_series_figure),
+    html.Hr(),
+    html.H3('Процент выполнения', style={'textAlign': 'center'}),
+    dcc.Graph(id='pie-chart', figure=pie_chart_figure),
+    html.Hr(),
+    html.H3('Категории проектов', style={'textAlign': 'center'}),
+    dcc.Graph(id='histogram', figure=histogram),
+    html.Hr(),
+    html.H3('Популярные проекты', style={'textAlign': 'center'}),
+    data_table
+], style={'padding': '20px'})
+
+
 # Запускаем веб-приложение
 if __name__ == '__main__':
     app.run_server(debug=True)
