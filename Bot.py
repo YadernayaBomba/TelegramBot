@@ -89,3 +89,22 @@ def diagrams(message):
     markup.add(item1, item2, item3, item4)
 
     bot.send_message(message.chat.id, "Выберите диаграмму:", reply_markup=markup)
+
+
+@bot.callback_query_handler(func=lambda call: True)
+def show_diagrams(call):
+    if call.data == '1':
+        photo = open('Линейная.png', 'rb')
+        bot.send_photo(call.message.chat.id, photo)
+    if call.data == '2':
+        photo = open('Круговая.png', 'rb')
+        bot.send_photo(call.message.chat.id, photo)
+    if call.data == '3':
+        photo = open('Гистограмма.png', 'rb')
+        bot.send_photo(call.message.chat.id, photo)
+    if call.data == '4':
+        photo = open('Таблица.png', 'rb')
+        bot.send_photo(call.message.chat.id, photo)
+
+if __name__ == "__main__":
+    bot.polling(none_stop=True)
