@@ -66,3 +66,26 @@ def get_phone(message):
     user_data[user_id]['phone'] = message.text
     bot.send_message(message.chat.id, "Регистрация завершена. Ваши данные:")
     show_data(message)
+
+
+@bot.message_handler(func=lambda message: message.text == "Мои данные")
+def show_data(message):
+    user_id = message.from_user.id
+    data = user_data[user_id]
+    if all(data.values()):
+        response = f"Имя: {data['name']}\nВозраст: {data['age']}\nТелефон: {data['phone']}"
+    else:
+        response = "Вы не завершили регистрацию. Пожалуйста, введите все данные."
+    bot.send_message(message.chat.id, response)
+
+
+@bot.message_handler(func=lambda message: message.text == "Диаграммы" or message.text == "/diagrams")
+def diagrams(message):
+    markup = types.InlineKeyboardMarkup(row_width=4)
+    item1 = types.InlineKeyboardButton("Диаграмма 1", callback_data='1')
+    item2 = types.InlineKeyboardButton("Диаграмма 2", callback_data='2')
+    item3 = types.InlineKeyboardButton("Диаграмма 3", callback_data='3')
+    item4 = types.InlineKeyboardButton("Диаграмма 4", callback_data='4')
+    markup.add(item1, item2, item3, item4)
+
+    bot.send_message(message.chat.id, "Выберите диаграмму:", reply_markup=markup)
